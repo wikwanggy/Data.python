@@ -8,8 +8,8 @@ names=["Bob","Jessica","Mary","John","Mel"]
 births=[965,155,77,578,973]
 custom=[1,5,25,13,23232]
 
-BabyDataSet = list(zip(names,births))
-df = pd.DataFrame(data=BabyDataSet,columns=['Names','Births'])
+BabyDataSet = list(zip(names,births)) # names와 births의 데이터를 엮어서 하나의 리스트에 저장.
+df = pd.DataFrame(data=BabyDataSet,columns=['Names','Births']) # 데이터를 엑셀 형태로 저장하고 열 이름은 각각 Names Births로 저장
 
 
 
@@ -41,11 +41,12 @@ plt.show() #그래프 출력
 np.random.seed(19920613)
 
 # 산점도 데이터를 생성합니다.
-x=np.arange(0.0,100.0,5.0) # 0에서 100까지 5씩 증가
+x=np.arange(0.0,100.0,5.0) # 시작점 0(0은 생략 가능)에서 100(끝 점 100)까지 5씩 증가(1은 생략)
 y=(x+1.5)+ np.random.rand(20)*50
 
 #산점도 데이터를 출력합니다
-plt.scatter(x,y,c="b",alpha=0.5,label="scatter point") #alpha는 원 굵기 label는 범례
+#          x값,y값,색상,색상 투명도,범례
+plt.scatter(x,y,c="b",alpha=0.5,label="scatter point") 
 plt.xlabel("x") # x축 제목
 plt.ylabel("y") # y축 제목
 plt.legend(loc='upper left')
