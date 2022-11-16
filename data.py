@@ -44,7 +44,7 @@ np.random.seed(19920613)
 x=np.arange(0.0,100.0,5.0) # 시작점 0(0은 생략 가능)에서 100(끝 점 100)까지 5씩 증가(1은 생략)
 y=(x+1.5)+ np.random.rand(20)*50
 
-#산점도 데이터를 출력합니다
+#산점도 데이터를 출력합니다uioUUIuuuuuuuuuuuuuuuuuuuuuuu
 #          x값,y값,색상,색상 투명도,범례
 plt.scatter(x,y,c="b",alpha=0.5,label="scatter point") 
 plt.xlabel("x") # x축 제목
