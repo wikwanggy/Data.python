@@ -7,7 +7,7 @@ chipo=pd.read_csv(file_path, sep="\t")
 
 print(chipo.shape)
 print("--------------------------------")
-print(chipo.info()) #
+print(chipo.info()) 
 
 # chipo라는 데이터 프레임에서 순서대로 10개의 데이터를 보여줍니다.
 chipo.head(10)

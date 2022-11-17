@@ -54,8 +54,8 @@ print(drinks.head(10))
 
 
 # 파이차트로 시각화 하기
-labels = drinks['continent'].value_counts().index.tolist()
-fracs1 = drinks['continent'].value_counts().values.tolist()
+labels = drinks['continent'].value_counts().index.tolist() #['AF','EU','AS','OT','OC','SA']
+fracs1 = drinks['continent'].value_counts().values.tolist() #[53,  45,  44,  26,  16,  12]
 explode = (0, 0, 0, 0.25, 0, 0)
 
 plt.pie(fracs1, explode=explode, labels=labels, autopct='%.0f%%', shadow=True)
