@@ -47,7 +47,7 @@ import matplotlib.pyplot as plt
 
 # plt.show()
 # null값인지 있는 값인지 확인하기.
-print(drinks['continent'].head(10).isnull())
+# print(drinks['continent'].head(10).isnull())
 # 결측데이터를 처리합니다 : 정보가 없는 국가를 'Others', 줄여서 통합 -> 'OT'
 drinks['continent'] = drinks['continent'].fillna('OT')
 print(drinks.head(10))

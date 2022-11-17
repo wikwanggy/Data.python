@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 # 판다스의 데이터 프레임을 생성하기.
 names=["Bob","Jessica","Mary","John","Mel"]
 births=[965,155,77,578,973]
-custom=[1,5,25,13,23232]
+custom=[1,5,25,13,23232] ##
 
 BabyDataSet = list(zip(names,births)) # names와 births의 데이터를 엮어서 하나의 리스트에 저장.
 df = pd.DataFrame(data=BabyDataSet,columns=['Names','Births']) # 데이터를 엑셀 형태로 저장하고 열 이름은 각각 Names Births로 저장
