@@ -2,7 +2,6 @@ from selenium import webdriver
 from bs4 import BeautifulSoup
 import re
 
-
 # 윈도우용 크롬 웹드라이버 실행 경로 (Windows)
 excutable_path = "chromedriver.exe"
 
