@@ -169,9 +169,59 @@ europe = drinks.loc[drinks['continent']=='EU']
 # print(africa)
 # print(europe)
 
-# from scipy import stats
+from scipy import stats
 # tTestResult = stats.ttest_ind(africa['beer_servings'], europe['beer_servings'])
 # tTestResultDiffVar = stats.ttest_ind(africa['beer_servings'], europe['beer_servings'], equal_var=False)
 
 # print("The t-statistic and p-value assuming equal variances is %.3f and %.3f." % tTestResult)
 # print("The t-statistic and p-value not assuming equal variances is %.3f and %.3f" % tTestResultDiffVar)
+
+# total_servings 피처를 생성합니다.
+#총 소비량(total_servings)는=맥주 소비량(bee                 r_servings)+와인 소비량(wine_servings)+spirit소비량(spirit_servings)
+drinks['total_servings'] = drinks['beer_servings'] + drinks['wine_servings'] + drinks['spirit_servings']
+
+# 술 소비량 대비 알콜 비율 피처를 생성합니다.
+# 술 소비량 대비 알콜 비율 피처=총 알콜 비율(total_litres_of_pure_alcohol)/총 소비량(total_servings)
+drinks['alcohol_rate'] = drinks['total_litres_of_pure_alcohol'] / drinks['total_servings']
+# 술 소비량 대비 알콜 비율 피처에['alcohol_rate']에 null값이 있으면 0으로 채워라(fillna())
+drinks['alcohol_rate'] = drinks['alcohol_rate'].fillna(0)
+
+# 순위 정보를 생성합니다.
+country_with_rank = drinks[['country', 'alcohol_rate']]
+# sort_values(내림차순)(by=[기준'alcohol_rate'], ascending=0)
+country_with_rank = country_with_rank.sort_values(by=['alcohol_rate'], ascending=0)
+# 상위 5위까지만 보여주기
+print(country_with_rank.head(5))
+
+# 국가별 순위 정보를 그래프로 시각화합니다.
+# country_with_rank.country.tolist()를 contry_list에 저장
+country_list = country_with_rank.country.tolist()
+# x_pos의 길이는 contry_list의 index의 길이로 한다
+x_pos = np.arange(len(country_list))
+# country_with_rank.alcohol_rate.tolist()를 rank에 저장
+rank = country_with_rank.alcohol_rate.tolist()
+# bar에 x포지션, x축엔 rank의 인덱스를 표시
+bar_list = plt.bar(x_pos, rank)
+# bar_list에 있는 index 중에 South Korea는 red로 표시
+bar_list[country_list.index("South Korea")].set_color('r')
+# y라벨은 술 소비량 대비 알콜 비율로 표시한다
+plt.ylabel('alcohol rate')
+# 제목 추가
+plt.title('liquor drink rank by contry')
+#axis() - X, Y축이 표시되는 범위를 지정하거나 반환합니다.
+plt.axis([0, 200, 0, 0.3])
+# contry_list에 index중에 "South Korea"를 korea_rank에 저장
+korea_rank = country_list.index("South Korea")
+
+korea_alc_rate = country_with_rank[country_with_rank['country'] == 'South Korea']['alcohol_rate'].values[0]
+# annotate 함수는 주석달기
+#               텍스트    : + str으로 변환한 korea_rank에 +1
+plt.annotate('South Korea : ' + str(korea_rank + 1), 
+            # 화살이 가르칠 위치
+             xy=(korea_rank, korea_alc_rate), 
+            # xytext=주석을 표시할 xy좌표를 설정할 때 사용합니다.
+             xytext=(korea_rank + 10, korea_alc_rate + 0.05),
+            # 화살표 추가(색상은 red 텍스트로부터 0.05 떨어진 위치)
+             arrowprops=dict(facecolor='red', shrink=0.05))
+# 차트 보여주기
+plt.show() 
