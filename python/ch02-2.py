@@ -124,6 +124,46 @@ content_corpus="".join(df["content_text"].tolist())
 nouns_tagger = Okt()
 nouns = nouns_tagger.nouns(content_corpus)
 count = Counter(nouns)
-print(count)
+#print(count)
 remove_char_counter=Counter({x : count[x] for x in count if len(x)>1})
-print(remove_char_counter)
+# print(remove_char_counter)
+
+
+# 한국어 약식 불용어사전 예시 파일입니다. 출처 - (https://www.ranks.nl/stopwords/korean)
+korean_stopwords_path = "python-data-analysis-master/data/korean_stopwords.txt"
+
+# 텍스트 파일을 오픈합니다.
+with open(korean_stopwords_path,encoding="utf-8")as f :
+    stopwords = f.readlines()
+stopwords = [x.strip() for x in stopwords]
+print(stopwords[:10])
+
+# 나무위키 페이지에 맞는 불용어를 추가합니다.
+namu_wiki_stopwords=['상위', '문서', '내용', '누설', '아래', '해당', '설명', '표기', '추가', '모든', '사용', '매우', '가장',
+                       '줄거리', '요소', '상황', '편집', '틀', '경우', '때문', '모습', '정도', '이후', '사실', '생각', '인물', 
+                       '이름', '년월']
+for stopword in namu_wiki_stopwords:
+    stopwords.append(stopword)
+    
+# 키워드 데이터에서 불용어를 제거합니다.
+remove_char_counter = Counter({x : remove_char_counter[x] for x in count if x not in stopwords})
+# print(remove_char_counter)
+
+
+import random
+import pytagcloud
+import webbrowser
+from IPython.display import Image
+
+
+# 가장 출현 빈도수가 높은 40개의 단어를 선정합니다.
+ranked_tags = remove_char_counter.most_common(40)
+
+# pytagcloud로 출력할 40개의 단어를 입력합니다. 단어 출력의 최대 크기는 80으로 제한합니다.
+taglist = pytagcloud.make_tags(ranked_tags, maxsize=80)
+
+# pytagcloud 이미지를 생성합니다. 폰트는 나눔 고딕을 사용합니다.
+pytagcloud.create_tag_image(taglist, 'wordcloud.jpg', size=(900, 600),fontname='NanumGothic', rectangular=False)
+
+# 생성한 이미지를 주피터 노트북상에서 출력합니다.
+Image(filename='wordcloud.jpg')
