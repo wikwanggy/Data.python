@@ -21,11 +21,11 @@ print(picher.columns)
 print(picher.head())
 
 print(print(picher.shape))
-
+import matplotlib.font_manager
 import matplotlib as mpl
 set(sorted([f.name for f in mpl.font_manager.fontManager.ttflist])) # 현재 OS 내에 설치된 폰트를 확인합니다.
 
-mpl.rc('font', family='NanumGothicOTF') # 자신의 OS에 존재하는 한글 폰트를 선택합니다. 없는경우, 위의 링크에서 한글폰트 설치 후 실행합니다.
+mpl.rc('font', family='NanumGothic') # 자신의 OS에 존재하는 한글 폰트를 선택합니다. 없는경우, 위의 링크에서 한글폰트 설치 후 실행합니다.
 
 print(picher['연봉(2018)'].describe())
 
@@ -203,7 +203,7 @@ result_df.columns = ['선수명', '실제연봉(2018)', '예측연봉(2018)', '�
 result_df = result_df[result_df['작년연봉(2017)'] != result_df['실제연봉(2018)']]
 result_df = result_df.reset_index()
 result_df = result_df.iloc[:10, :]
-result_df.head(10)
+print(result_df.head(10))
 
 
 # 선수별 연봉 정보(작년 연봉, 예측 연봉, 실제 연봉)를 bar 그래프로 출력합니다.
