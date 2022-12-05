@@ -97,3 +97,46 @@ sorted(feature, key=lambda tup: tup[1], reverse=True)[:10]
 for sorted_feature in sorted(feature, key=lambda tup: tup[1], reverse=True):
     if "month" in sorted_feature[0]:
         print(sorted_feature)
+        
+
+#Step 2 피처 엔지니어링 : 예측 모델 개선하기
+# 기존 피처 가공하기 : 'create_date'
+
+#데이터를 다시 불러옵니다.
+df = pd.read_csv("python-data-analysis-master/data/used_mobile_phone.csv")
+
+from datetime import datetime
+import time
+# create_date 피처를 수치적으로 계산하기 위해 unixtime으로 변환하는
+# 함수를 정의합니다.
+def date_to_unixtime(date_str):
+    timestamp = time.mktime(datetime.strptime(date_str, '%Y-%m-%d').timetuple())
+    return timestamp
+# create_date 피처를 '현재와 얼마나 가까운 데이터인지; 판단하기 위한
+# 점수를 생성합니다. 먼저 unixtime으로 데이터를 변환합니다
+df['create_unixtime']= df['create_date'].apply(lambda x: date_to_unixtime(x[:10]))
+
+# 변환된 unixtime에 min-max 스케일링을 적용합니다
+df['create_time_score']= (df['create_unixtime']-df['create_unixtime'].min()) / (df['create_unixtime'].max() - df['create_unixtime'].min())
+print(df[['create_date','create_unixtime', 'create_time_score']].head())
+
+# 기존 피처의 가공 : phone_model
+# phone_model 피처에서 저장 용량(phone_model_storage) 피처를 추출합니다
+df['phone_model_storage'] = df['phone_model'].apply(lambda x: x.split(" ")[1])
+
+# phone_model 피처에서 기종 세부명(phone_model_detail) 피처를 추출합니다.
+df['phone_model_detail'] = df['phone_model'].apply(lambda x: ' '.join(x.split(" ")[:-1]))
+print(df[['phone_model_storage','phone_model_detail']].head())
+
+# 기존 피처의 가공 : phone_model
+# phone_model 피처의 기종별 거래 데이터 개수를 집계합니다.
+model_counts = df['phone_model'].value_counts()
+
+# phone_model_detail 피처의 기종별 거래 데이터 개수를 집계합니다.
+model_detail_counts = df['phone_model_detail'].value_counts()
+data = [model_counts, model_detail_counts]
+
+# 두 피처 간의 기종별 거래 데이터 개수를 비교합니다
+mpl_fig = plt.figure()
+ax = mpl_fig.add_subplot(111)
+ax.boxplot(data)
