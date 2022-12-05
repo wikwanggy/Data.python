@@ -92,7 +92,7 @@ feat_labels = X.columns.tolist()
 feature = list(zip(feat_labels, forest.feature_importances_))
 sorted(feature, key=lambda tup: tup[1], reverse=True)[:10]
 
-# 피처 중요도 분석하기
+# 피처 중요도 분석하기 
 # month 피처 중, 영향력이 높은순으로 정렬하여 출력합니다.
 for sorted_feature in sorted(feature, key=lambda tup: tup[1], reverse=True):
     if "month" in sorted_feature[0]:
