@@ -6,3 +6,5 @@ def is_odd(number):
         return False # 주어진 자연수가 2로 나누었을때 0이 안되면 홀수이므로 False
 
 print(is_odd(4))
+
+# python 언어 활용

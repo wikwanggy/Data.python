@@ -244,3 +244,5 @@ print("상위 20개 긍정 형태소를 출력")
 for coef in coef_pos_index[-20:]:
     print(invert_index_vectorizer[coef[1]], coef[0])
 print("하위 20개 부정형태소를 출력")
+
+# python 수집 및 분석 개발
